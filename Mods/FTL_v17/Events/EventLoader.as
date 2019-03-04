@@ -1,0 +1,40 @@
+
+#include "LoadEvent.as";
+
+void onInit(CBlob @ this){
+
+	this.set_string("filename","event"+XORRandom(11)+".png");
+	this.set_u8("team",1);
+	
+	if(getNet().isServer())this.Sync("filename",true);
+}
+
+void onTick(CBlob @ this){
+
+	this.set_u16("timer",this.get_u16("timer")+1);
+
+	
+	if(this.get_u16("timer") == 20*30){
+		wipeWorld(getMap());
+		Sound::Play("ftl_jump.ogg");
+		SetScreenFlash(255, 255, 255, 255);
+	}
+	
+	if(this.get_u16("timer") == 30*30){
+		SetScreenFlash(255, 255, 255, 255);
+		loadEvent(getMap(),this.get_string("filename"),this.get_u8("team"));
+		
+		CBlob@[] blobs;
+	
+		getBlobsByName("reactorroom", blobs);
+		getBlobsByName("turret", blobs);
+		
+		for(int i = 0;i < blobs.length();i++){
+			if(blobs[i].getName() == "reactorroom")blobs[i].set_u16("FTLDrive",0);
+			if(blobs[i].getName() == "turret")blobs[i].set_u16("charge_time",0);
+		}
+
+		
+		if(getNet().isServer())this.server_Die();
+	}
+}

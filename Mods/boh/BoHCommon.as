@@ -1,0 +1,9 @@
+
+const bool IS_TEST = false;
+
+const u32 MINUTE = 60*getTicksASecond();
+const int WIZARD_DELAY_MINUTES = 4;
+const u32 WIZARD_DELAY =  (IS_TEST ? 0.71 : WIZARD_DELAY_MINUTES)*MINUTE;
+const u32 CHANGE_PLAYER_DELAY = 1*MINUTE;
+const u32 ANNOUNCEMENT_INTERVAL = 3*MINUTE;
+const float FIRST_WAVE_MULTIPLIER = 1.0f/2;

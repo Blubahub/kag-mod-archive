@@ -1,0 +1,1 @@
+const string CurrentModName = "backupRP";

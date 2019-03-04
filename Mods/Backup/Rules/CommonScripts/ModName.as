@@ -1,0 +1,1 @@
+const string CurrentModName = "Rp_In_Progress";

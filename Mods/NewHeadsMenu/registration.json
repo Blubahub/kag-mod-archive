@@ -1,0 +1,12 @@
+{
+    "description": "Adds a menu, that you can open by pressing V", 
+    "devHash": "3571ded3a92bc75b1640ef3c7929f46e64f889728125db9c9c7386c2c240f505c4e4288b57b293ec2725f3f4c9e012aff5dc420fe5e7511e0101ec57a23f176a", 
+    "developer": "Diprog", 
+    "gameID": 1, 
+    "lastBuild": "2016-01-26 17:11:54", 
+    "modID": "c6a57a56-cd89-451a-a5e9-56cc0a3c7089", 
+    "name": "New Heads Menu", 
+    "nameURL": "NewHeadsMenu", 
+    "packageType": "full", 
+    "registered": "2016-01-21 13:30:08"
+}

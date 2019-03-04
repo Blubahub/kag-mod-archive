@@ -1,0 +1,12 @@
+{
+    "description": "mod that sets up an mlk server", 
+    "devHash": "245d54f1ad8d92106014c272ff859228c9ecc7f04f7ff235d6700e76aa38884cfa8557c683428ce488aa62acb9cfc0810de48f83b66ce5d72c7ff8889fcd827e", 
+    "developer": "makmoud98", 
+    "gameID": 1, 
+    "lastBuild": "2015-10-30 17:35:48", 
+    "modID": "70caaa20-0bb2-41ac-8705-43fda557ca38", 
+    "name": "gamemode_config", 
+    "nameURL": "gamemode_config", 
+    "packageType": "full", 
+    "registered": "2015-08-06 03:59:58"
+}

@@ -1,0 +1,134 @@
+
+#include "HumanoidCommon.as";
+
+const f32 Scale = 1.0f;
+const f32 PosScale = Scale*2.0f;
+
+const Vec2f HUD = Vec2f(12,12+PosScale*32+12);
+
+
+void onTick(CBlob @this){
+
+	if(!canBeHealed(this.get_s8("torso_type")) || !this.hasTag("alive")){
+		this.Tag("does_not_eat");
+		if(this.getSprite() !is null)this.getSprite().RemoveScript("/HumanoidFood.as");
+		this.RemoveScript("/HumanoidFood.as");
+		return;
+	}
+
+	this.getCurrentScript().tickFrequency = 30*18;
+
+	u16 Starch = this.get_u8("food_starch");
+	u16 Meat = this.get_u8("food_meat");
+	u16 Plant = this.get_u8("food_plant");
+
+	bool used_meat = false;
+	
+	if(Meat >= Starch)if(Meat > 0){
+		this.sub_u8("food_meat",1);
+		used_meat = true;
+	}
+	
+	if(Plant >= Starch)if(Plant > 0)this.sub_u8("food_plant",1);
+	
+	if(Starch > 0)this.sub_u8("food_starch",1);
+	
+	if(getNet().isServer()){
+		this.Sync("food_starch",true);
+		this.Sync("food_meat",true);
+		this.Sync("food_plant",true);
+	}
+	
+	u16 TotalFood = Maths::Min(Meat,Plant);
+	
+	if(TotalFood >= 80){
+		HealBody(this, 5);
+	}
+	
+	if(this.isAttachedToPoint("BED")){
+		if(TotalFood >= 60){
+			HealBody(this, 5);
+		}
+	}
+	
+	if(TotalFood <= 20){
+		StarveBody(this, 2);
+	}
+	
+	if(used_meat)
+	if(this.get_f32("bleed") <= 0){
+		if(this.get_s16("blood_amount") < 100)this.set_s16("blood_amount", this.get_s16("blood_amount")+1);
+
+		if(getNet().isServer()){
+			this.Sync("blood_amount",true);
+		}
+	}
+}
+
+
+void onRender(CSprite@ this)
+{
+	if (g_videorecording)
+		return;
+
+	CBlob@ blob = this.getBlob();
+	CPlayer@ player = blob.getPlayer();
+	
+	if(getLocalPlayer() !is player)return;
+	
+	u16 Starch = blob.get_u8("food_starch");
+	u16 Meat = blob.get_u8("food_meat");
+	u16 Plant = blob.get_u8("food_plant");
+	
+	if(Starch > 100)Starch = 100;
+	if(Meat > 100)Meat = 100;
+	if(Plant > 100)Plant = 100;
+
+	GUI::DrawIcon("FoodBar.png", 0, Vec2f(32, 119), HUD, Scale);
+	
+	if(Meat < 20 && Plant < 20)if(getGameTime() % 20 < 10)GUI::DrawIcon("FoodBar.png", 7, Vec2f(32, 119), HUD, Scale);
+	
+	for(int i = 0;i < Plant;i++){
+		if(i == 0)GUI::DrawIcon("FoodBar.png", 1, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,PosScale), Scale);
+		GUI::DrawIcon("FoodBar.png", 2, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,-i*(PosScale)), Scale);
+		if(i == Plant-1)GUI::DrawIcon("FoodBar.png", 1, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,-(i+1)*(PosScale)), Scale);
+	}
+	
+	for(int i = 0;i < Starch;i++){
+		if(i == 0)GUI::DrawIcon("FoodBar.png", 3, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,PosScale), Scale);
+		GUI::DrawIcon("FoodBar.png", 4, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,-i*(PosScale)), Scale);
+		if(i == Starch-1)GUI::DrawIcon("FoodBar.png", 3, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,-(i+1)*(PosScale)), Scale);
+	}
+	
+	for(int i = 0;i < Meat;i++){
+		if(i == 0)GUI::DrawIcon("FoodBar.png", 5, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,PosScale), Scale);
+		GUI::DrawIcon("FoodBar.png", 6, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,-i*(PosScale)), Scale);
+		if(i == Meat-1)GUI::DrawIcon("FoodBar.png", 5, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,-(i+1)*(PosScale)), Scale);
+	}
+	
+	if(blob.isKeyPressed(keys::key_inventory)){
+	
+		GUI::DrawIcon("FoodBarHelp.png", 0, Vec2f(120, 120), HUD, Scale);
+		
+		SColor Text_colour(0xff130d1d);
+		GUI::SetFont("KAGFont_small_x2");
+		
+		int Y = 18;
+		
+		GUI::DrawText("Walking Speed", Vec2f(HUD.x,HUD.y)+Vec2f(33*PosScale,Y*PosScale), Text_colour);
+		GUI::DrawText("Healing", Vec2f(HUD.x,HUD.y)+Vec2f(33*PosScale,(Y+8)*PosScale), Text_colour);
+		
+		GUI::DrawText("Running Speed", Vec2f(HUD.x,HUD.y)+Vec2f(33*PosScale,(Y+21)*PosScale), Text_colour);
+		GUI::DrawText("Healing in bed", Vec2f(HUD.x,HUD.y)+Vec2f(33*PosScale,(Y+29)*PosScale), Text_colour);
+		
+		GUI::DrawText("Walking Speed", Vec2f(HUD.x,HUD.y)+Vec2f(33*PosScale,(Y+41)*PosScale), Text_colour);
+		
+		GUI::DrawText("Slowed Speed", Vec2f(HUD.x,HUD.y)+Vec2f(33*PosScale,(Y+61)*PosScale), Text_colour);
+		
+		GUI::DrawText("Crawling Speed", Vec2f(HUD.x,HUD.y)+Vec2f(33*PosScale,(Y+82)*PosScale), Text_colour);
+		GUI::DrawText("Starvation", Vec2f(HUD.x,HUD.y)+Vec2f(33*PosScale,(Y+90)*PosScale), Text_colour);
+	
+	}
+	
+	GUI::DrawIcon("FoodBarCap.png", 0, Vec2f(32, 119), Vec2f(HUD.x,HUD.y)+Vec2f(0,-Maths::Min(Meat,Plant)*(PosScale)), Scale);
+}

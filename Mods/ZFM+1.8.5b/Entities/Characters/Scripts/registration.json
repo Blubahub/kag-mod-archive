@@ -1,0 +1,12 @@
+{
+    "description": "Everyone drops a gravestone when dies. Like in WORMS!", 
+    "devHash": "4facdfd660891cd419d141940f02e111303e4dde1c54cbbd1f83838a36bb142865934d9d1c16d58f4412c8a31d034de108afd4c9606c15e5d5dee0b26b4a3c99", 
+    "developer": "Diprog", 
+    "gameID": 1, 
+    "lastBuild": "2017-03-14 18:40:47", 
+    "modID": "f36c2ed4-0d1b-40f1-b36f-377874467751", 
+    "name": "Gravestone", 
+    "nameURL": "Gravestone", 
+    "packageType": "full", 
+    "registered": "2017-03-14 15:40:04"
+}

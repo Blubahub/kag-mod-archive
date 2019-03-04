@@ -1,0 +1,12 @@
+{
+    "description": "In-game world editor.", 
+    "devHash": "2d609c9bad1f3481d43dec293c8eb319c65c07b604627811ee6d90718edc70410e30eaf88cece49e4fb9609429487c36f57d933e225b34a1a0f291c69669f017", 
+    "developer": "Aphelion3371", 
+    "gameID": 1, 
+    "lastBuild": "2014-10-11 11:52:41", 
+    "modID": "35c4b99c-0f72-4a58-abd5-06fd4782d057", 
+    "name": "Editor", 
+    "nameURL": "Editor", 
+    "packageType": "full", 
+    "registered": "2014-10-11 01:59:21"
+}

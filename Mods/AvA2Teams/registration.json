@@ -1,0 +1,12 @@
+{
+    "description": "puts admins with coloured names on red team (including guards and devs). gives admins extra resources in build time. gives non-admins less resources in build time. renames teams. makes teleporters cost 10 gold. flags return faster, return rate increa", 
+    "devHash": "f81bbf42fcd3c27adf40fb50fcc4b041138fde0e683b4f17eec1f865b67470d39168b18a7fc2445cb9590ebfc22ac06645b40b1ce3549875510f70a421897b8d", 
+    "developer": "cameron1010", 
+    "gameID": 1, 
+    "lastBuild": "2015-04-19 09:43:44", 
+    "modID": "28284634-3a18-48f8-b3ac-1383af84bcf0", 
+    "name": "AvATeams", 
+    "nameURL": "AvATeams", 
+    "packageType": "full", 
+    "registered": "2014-05-03 07:53:48"
+}

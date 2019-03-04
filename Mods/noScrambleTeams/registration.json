@@ -1,0 +1,12 @@
+{
+    "description": "removes both team balance and scramble teams on new map", 
+    "devHash": "ee397d7ecbdc931bbda42ac7732b3bbb3495c6baeb53f0c7befd60ab0ae494832e4a61c15a432fa9c96237f04e1fae95d4777856af68c5e88fe2e06acb50b7d9", 
+    "developer": "cameron1010", 
+    "gameID": 1, 
+    "lastBuild": "2015-04-26 20:50:57", 
+    "modID": "848565f8-0ac6-4d77-94e0-cbb67b8d818c", 
+    "name": "noScrambleTeams", 
+    "nameURL": "noScrambleTeams", 
+    "packageType": "full", 
+    "registered": "2014-10-25 04:45:54"
+}

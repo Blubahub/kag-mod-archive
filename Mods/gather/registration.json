@@ -1,0 +1,12 @@
+{
+    "description": "new gather mod for discord gather games", 
+    "devHash": "f933df9f9b094ef8d2b5c1517886bfce4e625a09a66d4f30f29ab1c3d5acb8c7c26c8a9fc7e03c87e061c306b5656f188daa2355ce4d7e6dbaeb8c2715c4cdbd", 
+    "developer": "cameron1010", 
+    "gameID": 1, 
+    "lastBuild": "2017-09-10 03:22:57", 
+    "modID": "6fe38133-198a-4ce3-8804-8b683d030c62", 
+    "name": "gatherAU", 
+    "nameURL": "gatherAU", 
+    "packageType": "full", 
+    "registered": "2017-08-31 01:33:50"
+}

@@ -1,0 +1,87 @@
+//archer HUD
+
+#include "BrennanCommon.as";
+#include "ActorHUDStartPos.as";
+
+const string iconsFilename = "Entities/Characters/Archer/ArcherIcons.png";
+const int slotsSize = 6;
+
+void onInit(CSprite@ this)
+{
+	this.getCurrentScript().runFlags |= Script::tick_myplayer;
+	this.getCurrentScript().removeIfTag = "dead";
+	this.getBlob().set_u8("gui_HUD_slots_width", slotsSize);
+}
+
+void ManageCursors(CBlob@ this)
+{
+	// set cursor
+	if (getHUD().hasButtons())
+	{
+		getHUD().SetDefaultCursor();
+	}
+	else
+	{
+		// set cursor
+		getHUD().SetCursorImage("Entities/Characters/Archer/ArcherCursor.png", Vec2f(32, 32));
+		getHUD().SetCursorOffset(Vec2f(-32, -32));
+		// frame set in logic
+	}
+}
+
+void onRender(CSprite@ this)
+{
+	if (g_videorecording)
+		return;
+
+	CBlob@ blob = this.getBlob();
+	CPlayer@ player = blob.getPlayer();
+
+	ManageCursors(blob);
+
+	// draw inventory
+	Vec2f tl = getActorHUDStartPosition(blob, slotsSize);
+	
+	if(blob.get_u32("CloakCD") < 1)
+	{
+		GUI::DrawIcon( "StatusEffects.png", 5, Vec2f(32,32), tl+Vec2f(8 + (slotsSize-3)*32, -40), 0.5f);
+	}
+	else
+	{
+		GUI::DrawIcon( "MenuItems.png", 13, Vec2f(32,32), tl+Vec2f(8 + (slotsSize-3)*32, -40), 0.5f);
+	}
+
+	if(blob.get_u32("ArrowCD") < 1)
+	{
+		GUI::DrawIcon( "StatusEffects.png", 6, Vec2f(32,32), tl+Vec2f(8 + (slotsSize-4)*32, -40), 0.5f);
+	}	
+	else
+	{
+		GUI::DrawIcon( "MenuItems.png", 13, Vec2f(32,32), tl+Vec2f(8 + (slotsSize-4)*32, -40), 0.5f);
+	}
+	
+	if(blob.get_u32("select") == 0)
+	{
+		GUI::DrawIcon( "MenuItems.png", 5, Vec2f(32,32), tl+Vec2f(8 + (slotsSize-3)*32, -65), 0.5f);
+	}	
+	else if (blob.get_u32("select") == 1)
+	{
+		GUI::DrawIcon( "MenuItems.png", 5, Vec2f(32,32), tl+Vec2f(8 + (slotsSize-4)*32, -65), 0.5f);
+	}
+	DrawInventoryOnHUD(blob, tl);
+
+	const u8 type = getArrowType(blob);
+	u8 arrow_frame = 0;
+
+	if (type != ArrowType::normal)
+	{
+		arrow_frame = type;
+	}
+
+	// draw coins
+	const int coins = player !is null ? player.getCoins() : 0;
+	DrawCoinsOnHUD(blob, coins, tl, slotsSize - 2);
+
+	// class weapon icon
+	GUI::DrawIcon(iconsFilename, arrow_frame, Vec2f(16, 32), tl + Vec2f(8 + (slotsSize - 1) * 32, -16), 1.0f);
+}

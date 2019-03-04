@@ -1,0 +1,1 @@
+const string mod_name = "OutlandsV1.1-1f";
