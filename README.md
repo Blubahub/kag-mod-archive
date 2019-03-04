@@ -1,4 +1,4 @@
-# kag mod archive
+# KAG mod archive
 This is just an upload of some (A lot of duplicates (different versions) of mods are missing, and a few other ones for various reasons) are uploaded here.
 
 # What to do
